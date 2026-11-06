@@ -1,0 +1,245 @@
+/* ==========================================================================
+   БАЗОВЫЕ СТИЛИ (Mobile First)
+   ========================================================================== */
+* { box-sizing: border-box; }
+img { max-width: 100%; height: auto; display: block; }
+body { overflow-x: hidden; width: 100%; margin: 0; }
+
+/* ==========================================================================
+   1. ШАПКА И НАВИГАЦИЯ
+   ========================================================================== */
+/* Шапка остается сверху (sticky) */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0; /* Уменьшили отступы, чтобы не занимала пол экрана */
+  gap: 10px;
+}
+
+.site-nav__list {
+  display: flex;
+  flex-direction: row; /* На мобильных делаем в строку, но с переносом */
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  gap: 4px;
+}
+
+.site-nav__link {
+  display: block;
+  padding: 6px 12px; /* Компактные кнопки меню */
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+}
+
+/* ЖЕСТКО фиксируем цвета активной ссылки с !important */
+.site-nav__link.site-nav__link--active {
+  color: var(--color-white) !important;
+  background-color: var(--color-primary) !important;
+}
+
+/* Десктоп (от 768px) */
+@media (min-width: 768px) {
+  .site-header__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+  }
+  
+  .site-nav__list {
+    width: auto;
+    gap: var(--space-sm);
+  }
+  
+  .site-nav__link {
+    padding: 8px 12px;
+    font-size: 16px;
+  }
+  
+  .site-nav__link:not(.site-nav__link--active) {
+    background-color: transparent;
+  }
+}
+
+/* ==========================================================================
+   2. СТРАНИЦА ТОВАРА (Картинка и текст)
+   ========================================================================== */
+/* На мобильном: картинка сверху, текст снизу */
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+.product-detail__image img {
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+/* Десктоп (от 768px): две колонки */
+@media (min-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   3. ТАБЛИЦА ХАРАКТЕРИСТИК
+   ========================================================================== */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: var(--space-md);
+}
+
+.product-table {
+  min-width: 600px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Мобильная версия (карточный вид) */
+@media (max-width: 767px) {
+  /* Скрываем шапку таблицы (Параметр | Значение) */
+  .product-table thead {
+    display: none;
+  }
+
+  /* Превращаем таблицу, строки и ячейки в блочные элементы */
+  .product-table, 
+  .product-table tbody, 
+  .product-table tr, 
+  .product-table td {
+    display: block;
+    width: 100%;
+    min-width: 0; /* Отменяем min-width для таблицы */
+  }
+
+  /* Оформляем каждую строку как карточку */
+  .product-table tr {
+    margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  /* Настраиваем ячейки */
+  .product-table td {
+    padding: var(--space-xs) 0;
+    border: none;
+    border-bottom: 1px dashed var(--color-border);
+    display: flex;
+    justify-content: space-between; /* Название слева, значение справа */
+  }
+
+  /* Убираем нижнюю границу у последней ячейки */
+  .product-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Делаем первую ячейку (название параметра) жирной */
+  .product-table td:first-child {
+    font-weight: bold;
+    color: var(--color-primary);
+  }
+}
+
+/* ==========================================================================
+   4. СЕТКА КАРТОЧЕК И КАТАЛОГ
+   ========================================================================== */
+/* Мобильные: 1 колонка */
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+/* Планшет (от 640px): 2 колонки */
+@media (min-width: 640px) {
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Десктоп (от 1024px): 3 колонки */
+@media (min-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+}
+
+/* ==========================================================================
+   5. СТРАНИЦА КАТАЛОГА (Фильтры + Товары)
+   ========================================================================== */
+/* Мобильные: фильтры сверху */
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+.catalog-filters {
+  order: -1;
+}
+
+/* Десктоп (от 1024px): фильтры слева, товары справа */
+@media (min-width: 1024px) {
+  .catalog-layout {
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: start;
+  }
+  .catalog-filters {
+    order: initial;
+    position: sticky;
+    top: 88px;
+  }
+}
+
+/* ==========================================================================
+   6. ФОРМА ЗАЯВКИ
+   ========================================================================== */
+/* Мобильные: 1 колонка */
+.order-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+/* Десктоп (от 768px): 2 колонки */
+@media (min-width: 768px) {
+  .order-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  /* Теперь мы явно указываем, какие поля занимают всю ширину */
+  .order-form__field--full,
+  .order-form__field--checkbox,
+  .order-form__actions {
+    grid-column: 1 / -1;
+  }
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-primary) !important;
+  outline-offset: 3px !important;
+}

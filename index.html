@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Учебный интернет-магазин — главная страница.">
+  <title>Главная — Учебный интернет-магазин</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+  <div class="welcome-banner" id="welcome-banner" hidden>
+    <div class="welcome-banner__inner">
+      <span class="welcome-banner__text" id="welcome-text"></span>
+      <button class="welcome-banner__close" type="button" id="welcome-close" aria-label="Закрыть">Х</button>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="index.html">ShopProject</a>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul class="site-nav__list">
+          <li class="site-nav__item"><a class="site-nav__link site-nav__link--active" href="index.html" aria-current="page">Главная</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="product.html">Товар</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="order.html">Заявка</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="#reviews">Отзывы</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero">
+      <h1>Учебный интернет-магазин</h1>
+      <p>Это стартовая страница учебного frontend-проекта. В дальнейшем здесь будет разработан многостраничный сайт интернет-магазина.</p>
+      <a class="button button--primary" href="#popular">Перейти к товарам</a>
+    </section>
+
+    <section class="section" id="advantages">
+      <h2>Преимущества проекта</h2>
+      <ul class="advantages-list">
+        <li>Понятная HTML-структура</li>
+        <li>Семантические блоки страницы</li>
+        <li>Внешний CSS-файл</li>
+        <li>Подготовка к многостраничному сайту</li>
+      </ul>
+    </section>
+
+    <section class="section" id="popular">
+      <h2>Популярные товары</h2>
+      <div class="products-grid">
+
+        <article class="product-card product-card--discount">
+          <span class="product-card__badge">Скидка</span>
+          <div class="product-card__image">
+            <img src="images/product-1.jpg" alt="Товар 1" loading="lazy">
+          </div>
+          <span class="product-card__category">Компьютеры</span>
+          <h3 class="product-card__title">Товар 1</h3>
+          <p class="product-card__description">Краткое описание учебного товара.</p>
+          <p class="product-card__price">Цена: <s class="product-card__price-old">12000 руб.</s> 10000 руб.</p>
+          <button class="button button--primary product-card__button" type="button" data-product="Товар 1">Заказать</button>
+          <a class="button button--secondary product-card__button" href="product.html?id=1" aria-label="Подробнее о Товар 1">Подробнее</a>
+        </article>
+
+        <article class="product-card">
+          <div class="product-card__image">
+            <img src="images/product-2.jpg" alt="Товар 2" loading="lazy">
+          </div>
+          <span class="product-card__category">Аудио</span>
+          <h3 class="product-card__title">Товар 2</h3>
+          <p class="product-card__description">Краткое описание учебного товара.</p>
+          <p class="product-card__price">Цена: 1500 руб.</p>
+          <button class="button button--primary product-card__button" type="button" data-product="Товар 2">Заказать</button>
+          <a class="button button--secondary product-card__button" href="product.html?id=2" aria-label="Подробнее о Товар 2">Подробнее</a>
+        </article>
+
+        <article class="product-card product-card--featured">
+          <span class="product-card__badge product-card__badge--new">Новинка</span>
+          <div class="product-card__image">
+            <img src="images/product-3.jpg" alt="Товар 3" loading="lazy">
+          </div>
+          <span class="product-card__category">Электроника</span>
+          <h3 class="product-card__title">Товар 3</h3>
+          <p class="product-card__description">Краткое описание учебного товара.</p>
+          <p class="product-card__price">Цена: 2000 руб.</p>
+          <button class="button button--primary product-card__button" type="button" data-product="Товар 3">Заказать</button>
+          <a class="button button--secondary product-card__button" href="product.html?id=3" aria-label="Подробнее о Товар 3">Подробнее</a>
+        </article>
+
+      </div>
+    </section>
+
+    <aside class="aside-info">
+      <h2>Информация для студентов</h2>
+      <p>На следующих занятиях проект будет расширяться: появятся формы, модальные окна, Flex/Grid, БЭМ-структура и адаптивная версия сайта.</p>
+    </aside>
+
+      <!-- Отзывы -->
+    <section class="section" id="reviews">
+      <h2>Отзывы покупателей</h2>
+      <div class="reviews-grid">
+
+        <article class="review-card">
+          <p class="review-card__rating" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p class="review-card__text">Отличный магазин! Заказ оформил быстро, всё пришло вовремя. Буду заказывать ещё.</p>
+          <p class="review-card__author">— Анна К.</p>
+        </article>
+
+        <article class="review-card">
+          <p class="review-card__rating" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p class="review-card__text">Понятный сайт, удобная навигация. Понравилось, что есть фильтры в каталоге.</p>
+          <p class="review-card__author">— Дмитрий П.</p>
+        </article>
+
+        <article class="review-card">
+          <p class="review-card__rating" aria-label="Оценка 4 из 5">★★★★☆</p>
+          <p class="review-card__text">Хороший выбор товаров. Хотелось бы больше способов оплаты, но в целом всё отлично.</p>
+          <p class="review-card__author">— Мария С.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <h2>Частые вопросы</h2>
+      <div class="faq">
+
+        <details class="faq-item">
+          <summary class="faq-item__question">Как оформить заказ?</summary>
+          <p class="faq-item__answer">Нажмите кнопку «Заказать» в карточке товара, заполните форму в модальном окне и подтвердите заявку. Мы свяжемся с вами для уточнения деталей.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__question">Какие способы оплаты доступны?</summary>
+          <p class="faq-item__answer">Мы принимаем банковские карты, переводы по СБП и наличные при получении.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__question">Сколько стоит доставка?</summary>
+          <p class="faq-item__answer">Доставка по городу — бесплатно при заказе от 3000 рублей. По России — от 300 рублей в зависимости от региона.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-item__question">Можно ли вернуть товар?</summary>
+          <p class="faq-item__answer">Да, в течение 14 дней с момента получения, если товар не был в использовании и сохранена упаковка.</p>
+        </details>
+
+      </div>
+    </section>
+    
+    <!-- Учебный блок для проверки JavaScript (ПЗ №15) -->
+    <section class="section js-check" aria-labelledby="js-check-title">
+      <h2 id="js-check-title">Проверка JavaScript</h2>
+      <p class="js-message">JavaScript пока не выполнился.</p>
+      <pre class="product-output"></pre>
+    </section>
+
+    <p class="success-message" id="success-message" hidden>Форма успешно отправлена!</p>
+  </main>
+
+  <footer class="site-footer" id="contacts">
+    <p>&copy; 2026 Учебный проект. Все права защищены.</p>
+    <p>Дисциплина: Фронтенд и бэкенд разработка</p>
+  </footer>
+
+  <dialog class="order-dialog" id="order-dialog" aria-labelledby="order-dialog-title">
+    <h2 class="order-dialog__title" id="order-dialog-title">Оформление заявки</h2>
+    
+    <!-- Кнопка закрытия теперь вверху и имеет правильный id -->
+    <button class="dialog-close" type="button" id="close-order-dialog" aria-label="Закрыть">
+      ×
+    </button>
+
+    <form class="order-form" id="order-form" action="#" method="post" novalidate>
+      <input id="selected-product" name="selected-product" type="hidden">
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-name">Имя</label>
+        <input class="order-form__input" id="order-name" name="name" type="text" placeholder="Введите ваше имя" minlength="2" required>
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-email">E-mail</label>
+        <input class="order-form__input" id="order-email" name="email" type="email" placeholder="example@mail.ru" required>
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-phone">Телефон</label>
+        <input class="order-form__input" id="order-phone" name="phone" type="tel" placeholder="+7 (900) 000-00-00" required>
+      </div>
+
+      <div class="order-form__field order-form__field--full">
+        <label class="order-form__label" for="order-comment">Комментарий</label>
+        <textarea class="order-form__textarea" id="order-comment" name="comment" rows="3" placeholder="Дополнительная информация"></textarea>
+      </div>
+
+      <div class="order-form__field order-form__field--checkbox">
+        <label>
+          <input id="order-agreement" name="agreement" type="checkbox" required>
+          Я согласен на обработку данных
+        </label>
+      </div>
+
+      <div class="order-form__actions">
+        <!-- Внизу осталась только кнопка отправки -->
+        <button class="button button--primary" type="submit">Отправить заявку</button>
+      </div>
+    </form>
+  </dialog>
+
+</body>
+</html>
