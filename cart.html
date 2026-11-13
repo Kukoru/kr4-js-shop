@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корзина — Учебный интернет-магазин</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="index.html">ShopProject</a>
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul class="site-nav__list">
+          <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+          <li class="site-nav__item"><a class="site-nav__link site-nav__link--active" href="cart.html">Корзина (<span class="cart-counter" id="header-cart-count">0</span>)</a></li>
+          <!-- Добавьте Корзину в меню на всех страницах! -->
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="section">
+      <h1>Ваша корзина</h1>
+      
+      <div id="cart-container">
+        <!-- Здесь JS отрисует товары -->
+        <p class="catalog-empty">Корзина пуста. <a href="catalog.html">Перейти в каталог</a></p>
+      </div>
+
+      <div id="cart-summary" class="cart-summary" hidden>
+        <h2>Итого</h2>
+        <p>Товаров: <span id="total-items">0</span></p>
+        <p>Общая стоимость: <span id="total-price">0 руб.</span></p>
+        <button class="button button--primary" type="button" onclick="alert('Заказ оформлен! (Это учебный проект)');">Оформить заказ</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Учебный проект. Все права защищены.</p>
+  </footer>
+
+  <script>
+    // Скрипт рендера страницы корзины
+    function renderCartPage() {
+      const container = document.getElementById('cart-container');
+      const summary = document.getElementById('cart-summary');
+      const totalItemsEl = document.getElementById('total-items');
+      const totalPriceEl = document.getElementById('total-price');
+
+      if (!container) return;
+
+      // Получаем данные из глобального массива cart (из cart.js)
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="catalog-empty">Корзина пуста. <a href="catalog.html">Перейти в каталог</a></p>';
+        summary.hidden = true;
+        return;
+      }
+
+      container.innerHTML = '';
+      summary.hidden = false;
+
+      cart.forEach(item => {
+        const el = document.createElement('div');
+        el.classList.add('cart-item');
+        el.style.display = 'flex';
+        el.style.justifyContent = 'space-between';
+        el.style.alignItems = 'center';
+        el.style.padding = '10px';
+        el.style.borderBottom = '1px solid #ddd';
+
+        el.innerHTML = `
+          <div>
+            <strong>${item.title}</strong><br>
+            <span>${item.price} руб. x ${item.quantity}</span>
+          </div>
+          <div>
+            <button class="button button--secondary" onclick="changeQuantity(${item.id}, -1)">-</button>
+            <button class="button button--secondary" onclick="changeQuantity(${item.id}, 1)">+</button>
+            <button class="button button--danger" onclick="removeFromCart(${item.id})">Удалить</button>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+
+      totalItemsEl.textContent = getCartCount();
+      totalPriceEl.textContent = `${getCartTotal().toLocaleString('ru-RU')} руб.`;
+    }
+
+    // Запускаем рендер при загрузке
+    document.addEventListener('DOMContentLoaded', renderCartPage);
+  </script>
+</body>
+</html>

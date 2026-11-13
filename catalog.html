@@ -10,7 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Подключаем скрипты для ПЗ №17 -->
+  <script src="js/data.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/cart.js" defer></script> 
+  <script src="js/catalog.js" defer></script>
 </head>
 <body>
 
@@ -68,76 +73,51 @@
         </form>
       </aside>
 
-<section class="catalog-products">
-  <h2>Список товаров</h2>
-  <div class="products-grid">
+      <section class="catalog-products">
+        <h2>Список товаров</h2>
+        
+        <!-- Элементы управления каталогом (ПЗ №17) -->
+        <section class="catalog-controls" aria-label="Управление каталогом">
+          <div class="catalog-controls__group">
+            <label for="catalog-search">Поиск товара</label>
+            <input id="catalog-search" class="catalog-controls__input" type="search" placeholder="Введите название" autocomplete="off">
+          </div>
+          <div class="catalog-controls__group">
+            <label for="category-filter">Категория</label>
+            <select id="category-filter" class="catalog-controls__select">
+              <option value="all">Все категории</option>
+              <option value="kitchen">Кухня</option>
+              <option value="home">Дом</option>
+              <option value="electronics">Электроника</option>
+            </select>
+          </div>
+          <div class="catalog-controls__group">
+            <label for="sort-select">Сортировка</label>
+            <select id="sort-select" class="catalog-controls__select">
+              <option value="default">По умолчанию</option>
+              <option value="price-asc">Сначала дешевле</option>
+              <option value="price-desc">Сначала дороже</option>
+              <option value="title-asc">По названию А-Я</option>
+            </select>
+          </div>
+        </section>
 
-    <article class="product-card product-card--discount" data-category="computers" data-price="1000">
-      <span class="product-card__badge">Скидка</span>
-      <div class="product-card__image">
-        <img src="images/product-1.jpg" alt="Товар 1" loading="lazy">
-      </div>
-      <h3 class="product-card__title">Товар 1</h3>
-      <p class="product-card__description">Краткое описание учебного товара.</p>
-      <p class="product-card__price">Цена: 10000 руб.</p>
-      <a class="button button--primary product-card__button" href="product.html?id=1">Подробнее</a>
-    </article>
+        <p class="catalog-count" aria-live="polite"></p>
+        <p class="catalog-empty" hidden>По выбранным условиям товары не найдены.</p>
 
-    <article class="product-card" data-category="audio" data-price="1500">
-      <div class="product-card__image">
-        <img src="images/product-2.jpg" alt="Товар 2" loading="lazy">
-      </div>      
-      <h3 class="product-card__title">Товар 2</h3>
-      <p class="product-card__description">Краткое описание учебного товара.</p>
-      <p class="product-card__price">Цена: 1500 руб.</p>
-      <a class="button button--primary product-card__button" href="product.html?id=2">Подробнее</a>
-    </article>
-
-    <article class="product-card product-card--featured" data-category="electronics" data-price="2000">
-      <span class="product-card__badge product-card__badge--new">Новинка</span>
-      <div class="product-card__image">
-        <img src="images/product-3.jpg" alt="Товар 3" loading="lazy">
-      </div> 
-      <h3 class="product-card__title">Товар 3</h3>
-      <p class="product-card__description">Краткое описание учебного товара.</p>
-      <p class="product-card__price">Цена: 2000 руб.</p>
-      <a class="button button--primary product-card__button" href="product.html?id=3">Подробнее</a>
-    </article>
-
-    <article class="product-card" data-category="computers" data-price="2500">
-      <div class="product-card__image">
-        <img src="images/product-4.jpg" alt="Товар 4" loading="lazy">
-      </div>       
-      <h3 class="product-card__title">Товар 4</h3>
-      <p class="product-card__description">Краткое описание учебного товара.</p>
-      <p class="product-card__price">Цена: 2500 руб.</p>
-      <a class="button button--primary product-card__button" href="product.html?id=4">Подробнее</a>
-    </article>
-
-    <article class="product-card" data-category="audio" data-price="3000">
-      <div class="product-card__image">
-        <img src="images/product-5.jpg" alt="Товар 5" loading="lazy">
-      </div>       
-      <h3 class="product-card__title">Товар 5</h3>
-      <p class="product-card__description">Краткое описание учебного товара.</p>
-      <p class="product-card__price">Цена: 3000 руб.</p>
-      <a class="button button--primary product-card__button" href="product.html?id=5">Подробнее</a>
-    </article>
-
-    <article class="product-card" data-category="electronics" data-price="3500">
-      <div class="product-card__image">
-        <img src="images/product-6.jpg" alt="Товар 6" loading="lazy">
-      </div>       
-      <h3 class="product-card__title">Товар 6</h3>
-      <p class="product-card__description">Краткое описание учебного товара.</p>
-      <p class="product-card__price">Цена: 350 руб.</p>
-      <a class="button button--primary product-card__button" href="product.html?id=6">Подробнее</a>
-    </article>
-
-  </div>
-</section>
+        <!-- Контейнер для карточек (пустой, JS его заполнит) -->
+        <div class="products-grid" data-products-container></div>
+      </section>
 
     </section>
+
+    <!-- Учебный блок для проверки JavaScript (ПЗ №16) -->
+    <section class="section js-check" aria-labelledby="js-check-title">
+      <h2 id="js-check-title">Проверка JavaScript</h2>
+      <p class="js-message">JavaScript пока не выполнился.</p>
+      <pre class="product-output"></pre>
+    </section>
+
   </main>
 
   <footer class="site-footer">
