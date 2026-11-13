@@ -121,7 +121,7 @@ if (pageOrderForm) {
 }
 
 // ===================================
-// Фильтр каталога
+// Фильтр каталога (старая логика по data-атрибутам, работает до ПЗ №17)
 // ===================================
 const filtersForm = document.getElementById('filters-form');
 
@@ -193,8 +193,9 @@ if (welcomeBanner && welcomeText) {
 
 // ===================================
 // Подстановка данных товара по URL-параметру ?id=N
+// (объект переименован в productDetailData, чтобы не путать с массивом из data.js)
 // ===================================
-const productsData = {
+const productDetailData = {
   1: { title: 'Товар 1', price: 1000, image: 'images/product-1.jpg', category: 'Электроника', badge: 'Скидка' },
   2: { title: 'Товар 2', price: 1500, image: 'images/product-2.jpg', category: 'Аудио', badge: null },
   3: { title: 'Товар 3', price: 2000, image: 'images/product-3.jpg', category: 'Компьютеры', badge: 'Новинка' },
@@ -208,7 +209,7 @@ const productDetail = document.querySelector('.product-detail');
 if (productDetail) {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id') || '1';
-  const product = productsData[id];
+  const product = productDetailData[id];
 
   if (product) {
     // Меняем title страницы
@@ -261,7 +262,6 @@ if (productDetail) {
 // ПЗ №15: Базовые функции и безопасный вывод
 // ===================================
 console.log('Файл main.js подключён');
-console.table(product);
 
 // Функция форматирования цены
 function formatPrice(price) {
@@ -294,14 +294,112 @@ function createProductSummary(product) {
   return `${product.title}: ${formatPrice(finalPrice)}. Статус: ${status}.`;
 }
 
-// Безопасный вывод на страницу через textContent
+// ===================================
+// ПЗ №16: Функции обработки массива товаров
+// ===================================
+
+// 1. Получение названий товаров
+function getProductTitles(products) {
+  return products.map((product) => product.title);
+}
+
+// 2. Получение товаров в наличии
+function getAvailableProducts(products) {
+  return products.filter((product) => product.isAvailable);
+}
+
+// 3. Поиск по названию
+function searchProducts(products, query) {
+  const normalizedQuery = query.trim().toLowerCase();
+  if (normalizedQuery === '') {
+    return products;
+  }
+  return products.filter((product) => {
+    return product.title.toLowerCase().includes(normalizedQuery);
+  });
+}
+
+// 4. Фильтрация по категории
+function filterProductsByCategory(products, category) {
+  if (category === 'all') {
+    return products;
+  }
+  return products.filter((product) => {
+    return product.category === category;
+  });
+}
+
+// 5. Сортировка по цене
+function sortProductsByPrice(products, direction = 'asc') {
+  const productsCopy = [...products];
+  if (direction === 'desc') {
+    return productsCopy.sort((a, b) => b.price - a.price);
+  }
+  return productsCopy.sort((a, b) => a.price - b.price);
+}
+
+// 6. Поиск по ID
+function findProductById(products, id) {
+  return products.find((product) => product.id === id);
+}
+
+// 7. Расчёт общей стоимости
+function calculateTotalPrice(products) {
+  return products.reduce((sum, product) => {
+    return sum + product.price;
+  }, 0);
+}
+
+// 8. Подсчёт товаров в наличии
+function countAvailableProducts(products) {
+  return products.filter((product) => product.isAvailable).length;
+}
+
+// 9. Расчёт средней цены
+function calculateAveragePrice(products) {
+  if (products.length === 0) {
+    return 0;
+  }
+  const totalPrice = calculateTotalPrice(products);
+  return Math.round(totalPrice / products.length);
+}
+
+// 10. Комбинированная функция
+function getPreparedProducts(products, query, category, sortDirection) {
+  let result = [...products];
+  result = searchProducts(result, query);
+  result = filterProductsByCategory(result, category);
+  result = sortProductsByPrice(result, sortDirection);
+  return result;
+}
+
+// ===================================
+// ПЗ №16: Проверка в консоли и вывод на страницу
+// ===================================
+console.log('--- ПЗ №16: Проверка функций ---');
+console.log('Названия товаров:', getProductTitles(window.productsData));
+console.table('Товары в наличии:', getAvailableProducts(window.productsData));
+console.table('Поиск "ко":', searchProducts(window.productsData, 'ко'));
+console.table('Категория "kitchen":', filterProductsByCategory(window.productsData, 'kitchen'));
+console.table('Сортировка по возрастанию:', sortProductsByPrice(window.productsData, 'asc'));
+console.log('Поиск по ID 3:', findProductById(window.productsData, 3));
+console.log('Общая стоимость:', calculateTotalPrice(window.productsData));
+console.log('В наличии:', countAvailableProducts(window.productsData));
+console.log('Средняя цена:', calculateAveragePrice(window.productsData));
+
+// Вывод краткой статистики на страницу
 const messageElement = document.querySelector('.js-message');
 const productOutputElement = document.querySelector('.product-output');
 
 if (messageElement) {
-  messageElement.textContent = 'JavaScript подключён корректно.';
+  messageElement.textContent = 'Массив товаров и функции обработки данных подключены.';
 }
 
 if (productOutputElement) {
-  productOutputElement.textContent = createProductSummary(product);
+  productOutputElement.textContent = [
+    `Всего товаров: ${window.productsData.length}`,
+    `Товаров в наличии: ${countAvailableProducts(window.productsData)}`,
+    `Средняя цена: ${calculateAveragePrice(window.productsData)} руб.`,
+    `Результатов поиска "ко": ${searchProducts(window.productsData, 'ко').length}`
+  ].join('\n');
 }
