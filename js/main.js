@@ -121,7 +121,7 @@ if (pageOrderForm) {
 }
 
 // ===================================
-// Фильтр каталога (старая логика по data-атрибутам, работает до ПЗ №17)
+// Фильтр каталога (старая логика, оставлена для совместимости)
 // ===================================
 const filtersForm = document.getElementById('filters-form');
 
@@ -131,32 +131,23 @@ if (filtersForm) {
   const priceTo = document.getElementById('price-to');
 
   const applyFilters = () => {
-    // Собираем отмеченные категории
     const checkedCategories = Array.from(
       filtersForm.querySelectorAll('input[name="category"]:checked')
     ).map((cb) => cb.value);
 
-    // Считываем диапазон цены
     const minPrice = priceFrom && priceFrom.value ? Number(priceFrom.value) : 0;
     const maxPrice = priceTo && priceTo.value ? Number(priceTo.value) : Infinity;
 
-    // Показываем/прячем карточки
     cards.forEach((card) => {
       const category = card.dataset.category;
       const price = Number(card.dataset.price);
-
-      const categoryMatch =
-        checkedCategories.length === 0 || checkedCategories.includes(category);
+      const categoryMatch = checkedCategories.length === 0 || checkedCategories.includes(category);
       const priceMatch = price >= minPrice && price <= maxPrice;
-
       card.style.display = categoryMatch && priceMatch ? '' : 'none';
     });
   };
 
-  // Фильтрация при изменении чекбоксов
   filtersForm.addEventListener('change', applyFilters);
-
-  // Фильтрация при нажатии «Применить»
   filtersForm.addEventListener('submit', (event) => {
     event.preventDefault();
     applyFilters();
@@ -376,30 +367,34 @@ function getPreparedProducts(products, query, category, sortDirection) {
 // ===================================
 // ПЗ №16: Проверка в консоли и вывод на страницу
 // ===================================
-console.log('--- ПЗ №16: Проверка функций ---');
-console.log('Названия товаров:', getProductTitles(window.productsData));
-console.table('Товары в наличии:', getAvailableProducts(window.productsData));
-console.table('Поиск "ко":', searchProducts(window.productsData, 'ко'));
-console.table('Категория "kitchen":', filterProductsByCategory(window.productsData, 'kitchen'));
-console.table('Сортировка по возрастанию:', sortProductsByPrice(window.productsData, 'asc'));
-console.log('Поиск по ID 3:', findProductById(window.productsData, 3));
-console.log('Общая стоимость:', calculateTotalPrice(window.productsData));
-console.log('В наличии:', countAvailableProducts(window.productsData));
-console.log('Средняя цена:', calculateAveragePrice(window.productsData));
+// Проверяем, есть ли массив на странице (он есть только там, где подключён data.js)
+if (typeof window.productsData !== 'undefined') {
+  console.log('--- ПЗ №16: Проверка функций ---');
+  console.log('Названия товаров:', getProductTitles(window.productsData));
+  console.table('Товары в наличии:', getAvailableProducts(window.productsData));
+  console.table('Поиск "ко":', searchProducts(window.productsData, 'ко'));
+  console.table('Категория "kitchen":', filterProductsByCategory(window.productsData, 'kitchen'));
+  console.table('Сортировка по возрастанию:', sortProductsByPrice(window.productsData, 'asc'));
+  console.log('Поиск по ID 3:', findProductById(window.productsData, 3));
+  console.log('Общая стоимость:', calculateTotalPrice(window.productsData));
+  console.log('В наличии:', countAvailableProducts(window.productsData));
+  console.log('Средняя цена:', calculateAveragePrice(window.productsData));
 
-// Вывод краткой статистики на страницу
-const messageElement = document.querySelector('.js-message');
-const productOutputElement = document.querySelector('.product-output');
+  const messageElement = document.querySelector('.js-message');
+  const productOutputElement = document.querySelector('.product-output');
 
-if (messageElement) {
-  messageElement.textContent = 'Массив товаров и функции обработки данных подключены.';
-}
+  if (messageElement) {
+    messageElement.textContent = 'Массив товаров и функции обработки данных подключены.';
+  }
 
-if (productOutputElement) {
-  productOutputElement.textContent = [
-    `Всего товаров: ${window.productsData.length}`,
-    `Товаров в наличии: ${countAvailableProducts(window.productsData)}`,
-    `Средняя цена: ${calculateAveragePrice(window.productsData)} руб.`,
-    `Результатов поиска "ко": ${searchProducts(window.productsData, 'ко').length}`
-  ].join('\n');
+  if (productOutputElement) {
+    productOutputElement.textContent = [
+      `Всего товаров: ${window.productsData.length}`,
+      `Товаров в наличии: ${countAvailableProducts(window.productsData)}`,
+      `Средняя цена: ${calculateAveragePrice(window.productsData)} руб.`,
+      `Результатов поиска "ко": ${searchProducts(window.productsData, 'ко').length}`
+    ].join('\n');
+  }
+} else {
+  console.log('ℹ️ Массив товаров (window.productsData) не найден на этой странице. Статистика ПЗ №16 пропущена.');
 }

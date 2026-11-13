@@ -294,8 +294,11 @@ a:focus-visible {
 }
 
 .product-card__button {
-  margin-top: auto;
-  align-self: flex-start;
+  margin-top: auto; /* Прижимает блок кнопок к низу карточки */
+  margin-bottom: var(--space-xs); /* Отступ снизу, чтобы кнопка не прилипала к краю */
+  align-self: flex-start; /* Кнопки будут по ширине текста, а не на всю карточку */
+  width: 100%; /* Растягиваем кнопки на всю ширину для аккуратности */
+  text-align: center;
 }
 
 /* Aside */
@@ -1012,4 +1015,97 @@ a:focus-visible {
   background-color: #111827;
   border-radius: var(--radius-sm);
   white-space: pre-wrap;
+}
+
+/* ===================================
+   ПЗ №17: Элементы управления каталогом
+   =================================== */
+.catalog-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.catalog-controls__group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+.catalog-controls__input,
+.catalog-controls__select {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
+
+.catalog-count {
+  margin-bottom: var(--space-md);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.catalog-empty {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Ошибки валидации (ПЗ №17) */
+.form-error {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--color-danger);
+}
+
+.form-message {
+  margin-top: var(--space-md);
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+/* Стили для корзины */
+.cart-summary {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.cart-summary h2 {
+  margin-top: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.button--success {
+  background-color: var(--color-success) !important;
+  color: white !important;
+}
+
+.button--danger {
+  background-color: var(--color-danger) !important;
+  color: white !important;
+  border: none;
+}
+
+/* Отступ для второй кнопки (Подробнее), чтобы она не прилипала к первой */
+.product-card__button + .product-card__button {
+  margin-top: 0; 
+  margin-bottom: var(--space-xs);
 }
